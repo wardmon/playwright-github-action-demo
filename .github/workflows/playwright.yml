@@ -31,11 +31,13 @@ jobs:
       run: npx playwright install --with-deps 
 
     - name: Run Playwright tests
-      run: npx playwright test
+      run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }}
     
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
+    - name: Upload report
+      uses: actions/upload-artifact@v4
+      if: always()
       with:
-        name: playwright-report
+        # 👇 THE FIX IS HERE 👇
+        name: playwright-report-${{ matrix.browser }}
         path: playwright-report/
         retention-days: 30

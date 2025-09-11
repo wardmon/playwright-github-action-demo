@@ -7,14 +7,50 @@ test.describe('Search Functionality', () => {
     await expect(page).toHaveTitle(/Playwright/);
   });
 
-  test('user can fill in login form', async ({ page }) => {
-    await page.goto('https://the-internet.herokuapp.com/login');
+  test('user can log in to SauceDemo', async ({ page }) => {
+    await page.goto('https://www.saucedemo.com/');
 
-    await page.fill('#username', 'tomsmith');
-    await page.fill('#password', 'SuperSecretPassword!');
-    await page.click('button[type="submit"]');
+    await page.fill('#user-name', 'standard_user');
+    await page.fill('#password', 'secret_sauce');
+    await page.click('#login-button');
 
-    await expect(page.locator('.flash.success')).toContainText('You logged into a secure area!');
+    // 验证跳转成功：进入库存页面
+    await expect(page).toHaveURL(/.*inventory/);
+    await expect(page.locator('.title')).toHaveText('Products');
+  });
+
+  // 示例 3：检查导航栏是否存在并点击
+  test('navigation menu should be visible and clickable', async ({ page }) => {
+    await page.goto('https://playwright.dev/');
+
+    const navDocs = page.locator('a:has-text("Docs")');
+    await expect(navDocs).toBeVisible();
+    await navDocs.click();
+
+    // 等待跳转到 Docs 页面
+    await expect(page).toHaveURL(/.*docs/);
+  });
+
+  // 示例 4：搜索框输入并等待结果
+  test('user can search in docs', async ({ page }) => {
+    await page.goto('https://playwright.dev/docs/intro');
+
+    const searchBox = page.locator('input[placeholder="Search"]');
+    await searchBox.fill('browser');
+    await page.waitForTimeout(1000); // 等待结果加载效果
+
+    const results = page.locator('.DocSearch-Hits');
+    await expect(results).toBeVisible();
+  });
+
+  // 示例 5：截图保存页面
+  test('take a screenshot of homepage', async ({ page }) => {
+    await page.goto('https://playwright.dev/');
+    await page.waitForTimeout(500); // 等待页面元素加载完整
+    await page.screenshot({ path: 'homepage.png', fullPage: true });
+
+    // 验证关键元素存在
+    await expect(page.locator('h1')).toContainText('Playwright');
   });
 
 });
