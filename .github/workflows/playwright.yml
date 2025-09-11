@@ -8,6 +8,13 @@ jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      # 当一个 job 失败时，不要取消其他 job
+      fail-fast: false
+      # 启动 4 个并行的 job
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
