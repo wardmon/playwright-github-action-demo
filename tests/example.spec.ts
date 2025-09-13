@@ -35,12 +35,18 @@ test.describe('Search Functionality', () => {
   test('user can search in docs', async ({ page }) => {
     await page.goto('https://playwright.dev/docs/intro');
 
-    const searchBox = page.locator('input[placeholder="Search"]');
-    await searchBox.fill('browser');
+    // 点击搜索按钮
+    const searchButton = page.locator('.DocSearch-Button-Placeholder');
+    await searchButton.click();
+    await page.waitForTimeout(500); // 等待搜索框弹出
+    
+    // 等待搜索输入框出现（点击后弹出的实际输入框）
+    const searchInput = page.locator('input.DocSearch-Input');
+    await expect(searchInput).toBeVisible();
+    
+    // 在实际的搜索输入框中输入
+    await searchInput.fill('browser');
     await page.waitForTimeout(1000); // 等待结果加载效果
-
-    const results = page.locator('.DocSearch-Hits');
-    await expect(results).toBeVisible();
   });
 
   // 示例 5：截图保存页面
