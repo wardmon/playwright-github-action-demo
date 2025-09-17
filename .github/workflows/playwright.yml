@@ -53,8 +53,10 @@ jobs:
         run: |
           mkdir -p merged-results
           for d in ./allure-results/*; do
-            echo "Extracting $d"
-            unzip -q "$d" -d merged-results
+            echo "Looking into $d"
+            zipfile=$(find "$d" -name "*.zip")
+            echo "Extracting $zipfile"
+            unzip -q "$zipfile" -d merged-results
           done
 
       - name: Set up Node.js
