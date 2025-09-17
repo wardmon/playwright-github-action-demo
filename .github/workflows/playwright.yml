@@ -47,6 +47,15 @@ jobs:
         with:
           path: ./allure-results
           # 会把多个 shard 的 allure-results 下载到同一目录
+    
+      # Extract Allure results due to multiple shards will create multiple zip files
+      - name: Extract all allure-results
+        run: |
+          mkdir -p merged-results
+          for d in ./allure-results/*; do
+            echo "Extracting $d"
+            unzip -q "$d" -d merged-results
+          done
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
@@ -55,11 +64,6 @@ jobs:
     
       - name: Install Allure CLI # Install Allure command line tool
         run: npm install -g allure-commandline
-
-      - name: Merge Allure results
-        run: |
-          mkdir -p merged-results
-          cp -r ./allure-results/*/ ./merged-results/
 
       - name: Generate Allure report
         run: |
