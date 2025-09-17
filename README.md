@@ -123,8 +123,7 @@ npx playwright test tests/example.spec.ts --debug
 - 跨平台测试（Ubuntu、Windows、macOS）
 - 多浏览器并行测试
 - 自动生成测试报告
-- 失败时上传截图和视频
-- 测试报告作为 GitHub Pages 发布
+
 
 ## 配置说明
 
@@ -141,22 +140,6 @@ npx playwright test tests/example.spec.ts --debug
 - use.video: 'retain-on-failure'     // 失败时保留视频
 ```
 
-## 最佳实践
-
-1. **页面对象模式**: 建议将页面元素和操作封装到页面对象中
-2. **等待策略**: 使用 `page.waitForSelector()` 而不是硬编码延时
-3. **数据驱动**: 使用外部数据文件驱动测试用例
-4. **环境隔离**: 不同环境使用不同的配置文件
-5. **错误处理**: 添加适当的错误处理和重试机制
-
-## 贡献指南
-
-1. Fork 本项目
-2. 创建功能分支 (`git checkout -b feature/amazing-feature`)
-3. 提交更改 (`git commit -m 'Add some amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 创建 Pull Request
-
 ## 许可证
 
 本项目采用 MIT 许可证。详情请参阅 [LICENSE](LICENSE) 文件。
@@ -166,14 +149,6 @@ npx playwright test tests/example.spec.ts --debug
 - [Playwright 官方文档](https://playwright.dev/)
 - [GitHub Actions 文档](https://docs.github.com/en/actions)
 - [Playwright 测试最佳实践](https://playwright.dev/docs/best-practices)
-
-## 联系方式
-
-如有问题或建议，请通过以下方式联系：
-
-- 创建 Issue
-- 发送邮件到 [your-email@example.com]
-- GitHub: [@zhongqishi12](https://github.com/zhongqishi12)
 
 ---
 
