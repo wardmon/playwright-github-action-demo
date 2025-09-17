@@ -48,16 +48,10 @@ jobs:
           path: ./allure-results
           # 会把多个 shard 的 allure-results 下载到同一目录
     
-      # Extract Allure results due to multiple shards will create multiple zip files
-      - name: Extract all allure-results
+      - name: Merge allure-results
         run: |
           mkdir -p merged-results
-          for d in ./allure-results/*; do
-            echo "Looking into $d"
-            zipfile=$(find "$d" -name "*.zip")
-            echo "Extracting $zipfile"
-            unzip -q "$zipfile" -d merged-results
-          done
+          cp -r ./allure-results/*/* ./merged-results/
 
       - name: Set up Node.js
         uses: actions/setup-node@v4
